@@ -88,3 +88,6 @@ qa_env/
 
 # Rope project settings
 .ropeproject
+
+# PyCharm files
+.idea/workspace.xml
