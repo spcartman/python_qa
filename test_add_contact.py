@@ -3,6 +3,8 @@ from selenium.webdriver.firefox.webdriver import WebDriver
 from selenium.webdriver.support.ui import Select
 import unittest
 from contact import Contact
+from navigation import Navigation
+from login import Auth
 
 
 def is_alert_present(wd):
@@ -20,8 +22,8 @@ class TestAddContact(unittest.TestCase):
     
     def test_add_contact(self):
         wd = self.wd
-        self.open_home_page(wd)
-        self.login(wd)
+        Navigation().open_home_page(wd)
+        Auth().login(wd, username="admin", password="secret")
         self.create_contact(wd, Contact(fname="First Name 001", mname="Middle Name", lname="Last Name 001",
                                         nick="fooname", title="Mr.", company="MacroSoft", address1="6, Wood road 19",
                                         hphone="185 83 71", mphone="378 74 28", wphone="479 82 21", fax="877 63 76",
@@ -29,20 +31,8 @@ class TestAddContact(unittest.TestCase):
                                         homepage="http://localhost/", bday="18", bmonth="July", byear="1981", aday="7",
                                         amonth="October", ayear="1983", group=6, address2="8, Home ave 24",
                                         hphone2="785 23 67", notes="The contact is created by the script."))
-        self.return_home(wd)
-        self.logout(wd)
-
-    def open_home_page(self, wd):
-        wd.get("http://localhost/addressbook/")
-
-    def login(self, wd):
-        wd.find_element_by_name("user").click()
-        wd.find_element_by_name("user").clear()
-        wd.find_element_by_name("user").send_keys("admin")
-        wd.find_element_by_name("pass").click()
-        wd.find_element_by_name("pass").clear()
-        wd.find_element_by_name("pass").send_keys("secret")
-        wd.find_element_by_xpath("//form[@id='LoginForm']/input[3]").click()
+        Navigation().return_home(wd)
+        Auth().logout(wd)
 
     def create_contact(self, wd, contact):
         # open contact creation form
@@ -120,12 +110,6 @@ class TestAddContact(unittest.TestCase):
         wd.find_element_by_name("notes").send_keys(contact.notes)
         # submit contact creation
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
-
-    def return_home(self, wd):
-        wd.find_element_by_link_text("home page").click()
-
-    def logout(self, wd):
-        wd.find_element_by_link_text("Logout").click()
 
     def tearDown(self):
         self.wd.quit()
