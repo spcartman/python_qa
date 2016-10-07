@@ -84,4 +84,4 @@ class ContactHelper:
         # submit contact creation
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
         # check that contact was created
-        self.app.return_home()
+        self.app.navigation.return_home()

@@ -3,14 +3,10 @@ class GroupHelper:
     def __init__(self, app):
         self.app = app
 
-    def open_groups_page(self):
-        wd = self.app.wd
-        wd.find_element_by_link_text("groups").click()
-
     def create(self, group):
         wd = self.app.wd
         # open groups page
-        self.open_groups_page()
+        self.app.navigation.open_groups_page()
         # open group creation form
         wd.find_element_by_name("new").click()
         # fill group form
@@ -26,4 +22,4 @@ class GroupHelper:
         # submit group creation
         wd.find_element_by_name("submit").click()
         # check that group was created
-        self.open_groups_page()
+        self.app.navigation.open_groups_page()
