@@ -1,4 +1,5 @@
 class Contact:
+
     def __init__(self, fname, mname, lname, nick, title, company, address1, hphone, mphone, wphone, fax, email1, email2,
                  email3, homepage, bday, bmonth, byear, aday, amonth, ayear, group, address2, hphone2, notes):
         # TODO: add photo support

@@ -1,4 +1,5 @@
 class Navigation:
+
     def open_home_page(self, wd):
         wd.get("http://localhost/addressbook/")
 
