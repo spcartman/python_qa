@@ -21,5 +21,4 @@ def test_add_contact(app):
                                 homepage="http://localhost/", bday="18", bmonth="July", byear="1981", aday="7",
                                 amonth="October", ayear="1983", group=6, address2="8, Home ave 24",
                                 hphone2="785 23 67", notes="The contact is created by the script."))
-    app.return_home()
     app.logout()

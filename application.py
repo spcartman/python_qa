@@ -36,6 +36,8 @@ class Application:
 
     def create_group(self, group):
         wd = self.wd
+        # open groups page
+        self.open_groups_page()
         # open group creation form
         wd.find_element_by_name("new").click()
         # fill group form
@@ -50,6 +52,8 @@ class Application:
         wd.find_element_by_name("group_footer").send_keys(group.footer)
         # submit group creation
         wd.find_element_by_name("submit").click()
+        # check that group was created
+        self.open_groups_page()
 
     def create_contact(self, contact):
         wd = self.wd
@@ -128,6 +132,8 @@ class Application:
         wd.find_element_by_name("notes").send_keys(contact.notes)
         # submit contact creation
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
+        # check that contact was created
+        self.return_home()
 
     def destroy(self):
         self.wd.quit()
