@@ -20,10 +20,31 @@ class GroupHelper:
         # submit group creation
         wd.find_element_by_name("submit").click()
 
-    def delete(self):
-        # TODO: implement proper deletion, currently function deletes first group only
+    def select(self):
+        # TODO: implement proper selection, currently function selects first group only
         wd = self.app.wd
-        # select group
         wd.find_element_by_name("selected[]").click()
-        # delete group
+
+    def delete(self):
+        wd = self.app.wd
+        self.select()
         wd.find_element_by_name("delete").click()
+
+    def modify(self, group):
+        wd = self.app.wd
+        # select group for edit
+        self.select()
+        # click button to edit
+        wd.find_element_by_name("edit").click()
+        # make changes to group fields
+        wd.find_element_by_name("group_name").click()
+        wd.find_element_by_name("group_name").clear()
+        wd.find_element_by_name("group_name").send_keys(group.name)
+        wd.find_element_by_name("group_header").click()
+        wd.find_element_by_name("group_header").clear()
+        wd.find_element_by_name("group_header").send_keys(group.header)
+        wd.find_element_by_name("group_footer").click()
+        wd.find_element_by_name("group_footer").clear()
+        wd.find_element_by_name("group_footer").send_keys(group.footer)
+        # submit group changes
+        wd.find_element_by_name("update").click()
