@@ -5,8 +5,6 @@ class GroupHelper:
 
     def create(self, group):
         wd = self.app.wd
-        # open groups page
-        self.app.navigation.open_groups_page()
         # open group creation form
         wd.find_element_by_name("new").click()
         # fill group form
@@ -21,5 +19,11 @@ class GroupHelper:
         wd.find_element_by_name("group_footer").send_keys(group.footer)
         # submit group creation
         wd.find_element_by_name("submit").click()
-        # check that group was created
-        self.app.navigation.open_groups_page()
+
+    def delete(self):
+        # TODO: implement proper deletion, currently function deletes first group only
+        wd = self.app.wd
+        # select group
+        wd.find_element_by_name("selected[]").click()
+        # delete group
+        wd.find_element_by_name("delete").click()
