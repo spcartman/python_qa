@@ -83,5 +83,10 @@ class ContactHelper:
         wd.find_element_by_name("notes").send_keys(contact.notes)
         # submit contact creation
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
-        # check that contact was created
-        self.app.navigation.return_home()
+
+    def delete(self):
+        # TODO: implement proper deletion, currently function deletes first contact only
+        wd = self.app.wd
+        wd.find_element_by_name("selected[]").click()
+        wd.find_element_by_xpath("//input[@value='Delete']").click()
+        wd.switch_to_alert().accept()
