@@ -6,11 +6,13 @@ class ContactHelper:
     def __init__(self, app):
         self.app = app
 
-    def create(self, contact):
+    def select(self):
+        # TODO: implement proper selection, currently function deletes first contact only
         wd = self.app.wd
-        # open contact creation form
-        wd.find_element_by_link_text("add new").click()
-        # fill contact form
+        wd.find_element_by_name("selected[]").click()
+
+    def fill_form(self, contact):
+        wd = self.app.wd
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
         wd.find_element_by_name("firstname").send_keys(contact.fname)
@@ -70,8 +72,6 @@ class ContactHelper:
         wd.find_element_by_name("ayear").click()
         wd.find_element_by_name("ayear").clear()
         wd.find_element_by_name("ayear").send_keys(contact.ayear)
-        new_group = Select(wd.find_element_by_name("new_group"))
-        new_group.select_by_index(contact.group)
         wd.find_element_by_name("address2").click()
         wd.find_element_by_name("address2").clear()
         wd.find_element_by_name("address2").send_keys(contact.address2)
@@ -81,7 +81,33 @@ class ContactHelper:
         wd.find_element_by_name("notes").click()
         wd.find_element_by_name("notes").clear()
         wd.find_element_by_name("notes").send_keys(contact.notes)
+
+    def set_group(self, contact):
+        wd = self.app.wd
+        new_group = Select(wd.find_element_by_name("new_group"))
+        new_group.select_by_index(contact.group)
+
+    def create(self, contact):
+        wd = self.app.wd
+        # open contact creation form
+        wd.find_element_by_link_text("add new").click()
+        # fill contact form
+        self.fill_form(contact)
+        self.set_group(contact)
         # submit contact creation
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
-        # check that contact was created
-        self.app.navigation.return_home()
+
+    def modify(self, contact):
+        wd = self.app.wd
+        # click edit image-button
+        wd.find_element_by_xpath("//img[@Title='Edit']").click()
+        # make changes to contact fields
+        self.fill_form(contact)
+        # submit contact changes
+        wd.find_element_by_name("update").click()
+
+    def delete(self):
+        wd = self.app.wd
+        self.select()
+        wd.find_element_by_xpath("//input[@value='Delete']").click()
+        wd.switch_to_alert().accept()
