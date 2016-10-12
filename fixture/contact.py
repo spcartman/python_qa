@@ -100,7 +100,7 @@ class ContactHelper:
     def modify(self, contact):
         wd = self.app.wd
         # click edit image-button
-        wd.find_element_by_xpath("//img[@Title='Edit']").click()
+        wd.find_element_by_xpath("//img[@title='Edit']").click()
         # make changes to contact fields
         self.fill_form(contact)
         # submit contact changes
