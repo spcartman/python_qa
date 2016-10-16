@@ -1,7 +1,9 @@
 class Contact:
 
-    def __init__(self, fname, mname, lname, nick, title, company, address1, hphone, mphone, wphone, fax, email1, email2,
-                 email3, homepage, bday, bmonth, byear, aday, amonth, ayear, group, address2, hphone2, notes):
+    def __init__(self, fname=None, mname=None, lname=None, nick=None, title=None, company=None, address1=None,
+                 hphone=None, mphone=None, wphone=None, fax=None, email1=None, email2=None, email3=None, homepage=None,
+                 bday=None, bmonth=None, byear=None, aday=None, amonth=None, ayear=None, group=None, address2=None,
+                 hphone2=None, notes=None):
         # TODO: add photo support
         self.fname = fname
         self.mname = mname

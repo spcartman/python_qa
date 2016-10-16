@@ -2,7 +2,7 @@
 from model.contact import Contact
 
 
-def test_modify_contact(app):
+def test_modify_whole_contact(app):
     app.navigation.open_home_page()
     app.session.login('admin', 'secret')
     app.contact.modify(Contact(fname="New First Name 003", mname="New Middle Name", lname="New Last Name 003",
@@ -12,5 +12,13 @@ def test_modify_contact(app):
                                homepage="http://new_localhost/", bday="22", bmonth="June", byear="1933", aday="11",
                                amonth="april", ayear="1955", group=7, address2="8, New Home ave 24",
                                hphone2="333 23 33", notes="The contact is UPDATED by the script."))
+    app.navigation.return_home()
+    app.session.logout()
+
+
+def test_modify_contact_name(app):
+    app.navigation.open_home_page()
+    app.session.login('admin', 'secret')
+    app.contact.modify(Contact(fname="New First Name 003"))
     app.navigation.return_home()
     app.session.logout()
