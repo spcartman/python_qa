@@ -25,7 +25,7 @@ class ContactHelper:
             item.select_by_value(value)
 
     def fill_form(self, contact):
-        # TODO: merge update test and dropdown fields, merge fill_form and set_group methods
+        # TODO: merge update text and dropdown fields, merge fill_form and set_group methods
         self.update_text_field("firstname", contact.fname)
         self.update_text_field("middlename", contact.mname)
         self.update_text_field("lastname", contact.lname)

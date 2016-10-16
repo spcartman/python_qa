@@ -7,24 +7,17 @@ fixture = None
 
 @pytest.fixture
 def app():
-
-    def create_fixture():
-        global fixture
+    global fixture
+    if (fixture is None) or (not fixture.is_valid()):
         fixture = Application()
         fixture.navigation.open_home_page()
-        fixture.session.login(username="admin", password="secret")
-
-    if fixture is None:
-        create_fixture()
-    else:
-        if not fixture.is_valid():
-            create_fixture()
+    fixture.session.ensure_login(username="admin", password="secret")
     return fixture
 
 
 @pytest.fixture(scope="session", autouse=True)
 def stop(request):
     def fin():
-        fixture.session.logout()
+        fixture.session.ensure_logout()
         fixture.destroy()
     request.addfinalizer(fin)
