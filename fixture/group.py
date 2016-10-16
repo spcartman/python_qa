@@ -24,18 +24,15 @@ class GroupHelper:
         wd = self.app.wd
         # open group creation form
         wd.find_element_by_name("new").click()
-        # fill group form
         self.fill_form(group)
         # submit group creation
         wd.find_element_by_name("submit").click()
 
     def modify(self, group):
         wd = self.app.wd
-        # select group for edit
         self.select()
         # click button to edit
         wd.find_element_by_name("edit").click()
-        # make changes to group fields
         self.fill_form(group)
         # submit group changes
         wd.find_element_by_name("update").click()
