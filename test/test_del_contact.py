@@ -2,8 +2,6 @@
 
 
 def test_del_contact(app):
-    app.navigation.open_home_page()
-    app.session.login('admin', 'secret')
+    app.navigation.return_home()
     app.contact.delete()
     app.navigation.open_home_page()
-    app.session.logout()
