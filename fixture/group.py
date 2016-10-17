@@ -20,6 +20,10 @@ class GroupHelper:
         self.update_field("group_header", group.header)
         self.update_field("group_footer", group.footer)
 
+    def count(self):
+        wd = self.app.wd
+        return len(wd.find_elements_by_name("selected[]"))
+
     def create(self, group):
         wd = self.app.wd
         # open group creation form
