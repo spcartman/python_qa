@@ -4,7 +4,7 @@ from model.contact import Contact
 
 def test_modify_whole_contact(app):
     app.navigation.go_home()
-    if app.contact.count() == 0:
+    if app.count_item() == 0:
         app.contact.create(Contact(fname="Safety Contact"))
     app.contact.modify(Contact(fname="New First Name 003", mname="New Middle Name", lname="New Last Name 003",
                                nick="New fooname", title="New Mr.", company="New MacroSoft", address1="6, New road 19",
@@ -18,7 +18,7 @@ def test_modify_whole_contact(app):
 
 def test_modify_contact_name(app):
     app.navigation.go_home()
-    if app.contact.count() == 0:
+    if app.count_item() == 0:
         app.contact.create(Contact(fname="Safety Contact"))
     app.contact.modify(Contact(fname="New First Name 003"))
     app.navigation.go_home()

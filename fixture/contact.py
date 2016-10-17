@@ -1,71 +1,42 @@
-from selenium.webdriver.support.ui import Select
-
-
 class ContactHelper:
 
     def __init__(self, app):
         self.app = app
 
-    def select(self):
-        # TODO: implement proper selection, currently function deletes first contact only
-        wd = self.app.wd
-        wd.find_element_by_name("selected[]").click()
-
-    def count(self):
-        wd = self.app.wd
-        return len(wd.find_elements_by_name("selected[]"))
-
-    def update_text_field(self, field, value):
-        wd = self.app.wd
-        if value is not None:
-            wd.find_element_by_name(field).click()
-            wd.find_element_by_name(field).clear()
-            wd.find_element_by_name(field).send_keys(value)
-
-    def update_dropdown_field(self, field, value):
-        wd = self.app.wd
-        if value is not None:
-            item = Select(wd.find_element_by_name(field))
-            item.select_by_value(value)
-
     def fill_form(self, contact):
-        # TODO: merge update text and dropdown fields, merge fill_form and set_group methods
-        self.update_text_field("firstname", contact.fname)
-        self.update_text_field("middlename", contact.mname)
-        self.update_text_field("lastname", contact.lname)
-        self.update_text_field("nickname", contact.nick)
-        self.update_text_field("title", contact.title)
-        self.update_text_field("company", contact.company)
-        self.update_text_field("address", contact.address1)
-        self.update_text_field("home", contact.hphone)
-        self.update_text_field("mobile", contact.mphone)
-        self.update_text_field("work", contact.wphone)
-        self.update_text_field("fax", contact.fax)
-        self.update_text_field("email", contact.email1)
-        self.update_text_field("email2", contact.email2)
-        self.update_text_field("email3", contact.email3)
-        self.update_text_field("homepage", contact.homepage)
-        self.update_dropdown_field("bday", contact.bday)
-        self.update_dropdown_field("bmonth", contact.bmonth)
-        self.update_text_field("byear", contact.byear)
-        self.update_dropdown_field("aday", contact.aday)
-        self.update_dropdown_field("amonth", contact.amonth)
-        self.update_text_field("ayear", contact.ayear)
-        self.update_text_field("address2", contact.address2)
-        self.update_text_field("phone2", contact.hphone2)
-        self.update_text_field("notes", contact.notes)
-
-    def set_group(self, contact):
         wd = self.app.wd
-        new_group = Select(wd.find_element_by_name("new_group"))
-        new_group.select_by_index(contact.group)
+        self.app.update_text_field("firstname", contact.fname)
+        self.app.update_text_field("middlename", contact.mname)
+        self.app.update_text_field("lastname", contact.lname)
+        self.app.update_text_field("nickname", contact.nick)
+        self.app.update_text_field("title", contact.title)
+        self.app.update_text_field("company", contact.company)
+        self.app.update_text_field("address", contact.address1)
+        self.app.update_text_field("home", contact.hphone)
+        self.app.update_text_field("mobile", contact.mphone)
+        self.app.update_text_field("work", contact.wphone)
+        self.app.update_text_field("fax", contact.fax)
+        self.app.update_text_field("email", contact.email1)
+        self.app.update_text_field("email2", contact.email2)
+        self.app.update_text_field("email3", contact.email3)
+        self.app.update_text_field("homepage", contact.homepage)
+        self.app.update_dropdown_field("bday", contact.bday)
+        self.app.update_dropdown_field("bmonth", contact.bmonth)
+        self.app.update_text_field("byear", contact.byear)
+        self.app.update_dropdown_field("aday", contact.aday)
+        self.app.update_dropdown_field("amonth", contact.amonth)
+        if len(wd.find_elements_by_name("new_group")) > 0:
+            self.app.update_dropdown_field("new_group", contact.group)
+        self.app.update_text_field("ayear", contact.ayear)
+        self.app.update_text_field("address2", contact.address2)
+        self.app.update_text_field("phone2", contact.hphone2)
+        self.app.update_text_field("notes", contact.notes)
 
     def create(self, contact):
         wd = self.app.wd
         # open contact creation form
         wd.find_element_by_link_text("add new").click()
         self.fill_form(contact)
-        self.set_group(contact)
         # submit contact creation
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
 
@@ -79,7 +50,7 @@ class ContactHelper:
 
     def delete(self):
         wd = self.app.wd
-        self.select()
+        self.app.select_item()
         # click Delete button
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         # confirm deletion
