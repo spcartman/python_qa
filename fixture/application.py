@@ -40,7 +40,8 @@ class Application:
         if value is not None:
             item = Select(self.wd.find_element_by_name(field))
             if field == "new_group":
-                item.select_by_index(value)
+                # item.select_by_index(value)
+                pass # TODO: check for the number of elements in dropdown
             else:
                 item.select_by_value(value)
 
