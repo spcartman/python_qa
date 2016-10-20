@@ -22,7 +22,7 @@ class GroupHelper:
 
     def modify(self, group):
         wd = self.app.wd
-        self.app.select_item()
+        self.app.select_item_by_index()
         # click button to edit
         wd.find_element_by_name("edit").click()
         self.fill_form(group)
@@ -30,9 +30,9 @@ class GroupHelper:
         wd.find_element_by_name("update").click()
         self.group_cache = None
 
-    def delete(self):
+    def delete_by_index(self, index):
         wd = self.app.wd
-        self.app.select_item()
+        self.app.select_item_by_index(index)
         wd.find_element_by_name("delete").click()
         self.group_cache = None
 

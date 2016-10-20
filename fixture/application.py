@@ -22,9 +22,9 @@ class Application:
         except:
             return False
 
-    def select_item(self):
+    def select_item_by_index(self, index):
         # TODO: implement proper selection, currently function deletes first item only
-        self.wd.find_element_by_name("selected[]").click()
+        self.wd.find_elements_by_name("selected[]")[index].click()
 
     def count_item(self):
         return len(self.wd.find_elements_by_name("selected[]"))

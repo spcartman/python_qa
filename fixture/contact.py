@@ -53,9 +53,9 @@ class ContactHelper:
         wd.find_element_by_name("update").click()
         self.contact_cache = None
 
-    def delete(self):
+    def delete_by_index(self, index):
         wd = self.app.wd
-        self.app.select_item()
+        self.app.select_item_by_index(index)
         # click Delete button
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         # confirm deletion
