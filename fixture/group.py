@@ -1,3 +1,6 @@
+from model.group import Group
+
+
 class GroupHelper:
 
     def __init__(self, app):
@@ -29,3 +32,12 @@ class GroupHelper:
         wd = self.app.wd
         self.app.select_item()
         wd.find_element_by_name("delete").click()
+
+    def get_group_list(self):
+        wd = self.app.wd
+        groups = []
+        for element in wd.find_elements_by_css_selector("span.group"):
+            name = element.text
+            id = element.find_element_by_name("selected[]").get_attribute("value")
+            groups.append(Group(name=name, id=id))
+        return groups

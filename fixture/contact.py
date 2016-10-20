@@ -1,3 +1,6 @@
+from model.contact import Contact
+
+
 class ContactHelper:
 
     def __init__(self, app):
@@ -55,3 +58,13 @@ class ContactHelper:
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         # confirm deletion
         wd.switch_to_alert().accept()
+
+    def get_contact_list(self):
+        wd = self.app.wd
+        contacts = []
+        for element in wd.find_elements_by_css_selector("tr[name=entry]"):
+            last_name = element.find_element_by_css_selector("td:nth-child(2)").text
+            first_name = element.find_element_by_css_selector("td:nth-child(3)").text
+            id = element.find_element_by_css_selector("td:nth-child(1) > input").get_attribute("id")
+            contacts.append(Contact(fname=first_name, lname=last_name, id=id))
+        return contacts
