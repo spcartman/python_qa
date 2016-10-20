@@ -42,29 +42,35 @@ class ContactHelper:
         self.fill_form(contact)
         # submit contact creation
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
+        self.contact_cache = None
 
-    def modify(self, contact):
+    def modify_by_index(self, index, contact):
         wd = self.app.wd
         # click edit image-button
-        wd.find_element_by_xpath("//img[@title='Edit']").click()
+        wd.find_elements_by_xpath("//img[@title='Edit']")[index].click()
         self.fill_form(contact)
         # submit contact changes
         wd.find_element_by_name("update").click()
+        self.contact_cache = None
 
-    def delete(self):
+    def delete_by_index(self, index):
         wd = self.app.wd
-        self.app.select_item()
+        self.app.select_item_by_index(index)
         # click Delete button
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         # confirm deletion
         wd.switch_to_alert().accept()
+        self.contact_cache = None
+
+    contact_cache = None
 
     def get_contact_list(self):
-        wd = self.app.wd
-        contacts = []
-        for element in wd.find_elements_by_css_selector("tr[name=entry]"):
-            last_name = element.find_element_by_css_selector("td:nth-child(2)").text
-            first_name = element.find_element_by_css_selector("td:nth-child(3)").text
-            id = element.find_element_by_css_selector("td:nth-child(1) > input").get_attribute("id")
-            contacts.append(Contact(fname=first_name, lname=last_name, id=id))
-        return contacts
+        if self.contact_cache is None:
+            wd = self.app.wd
+            self.contact_cache = []
+            for element in wd.find_elements_by_css_selector("tr[name=entry]"):
+                last_name = element.find_element_by_css_selector("td:nth-child(2)").text
+                first_name = element.find_element_by_css_selector("td:nth-child(3)").text
+                id = element.find_element_by_css_selector("td:nth-child(1) > input").get_attribute("id")
+                self.contact_cache.append(Contact(fname=first_name, lname=last_name, id=id))
+        return list(self.contact_cache)

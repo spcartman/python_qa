@@ -18,26 +18,32 @@ class GroupHelper:
         self.fill_form(group)
         # submit group creation
         wd.find_element_by_name("submit").click()
+        self.group_cache = None
 
-    def modify(self, group):
+    def modify_by_index(self, index, group):
         wd = self.app.wd
-        self.app.select_item()
+        self.app.select_item_by_index(index)
         # click button to edit
         wd.find_element_by_name("edit").click()
         self.fill_form(group)
         # submit group changes
         wd.find_element_by_name("update").click()
+        self.group_cache = None
 
-    def delete(self):
+    def delete_by_index(self, index):
         wd = self.app.wd
-        self.app.select_item()
+        self.app.select_item_by_index(index)
         wd.find_element_by_name("delete").click()
+        self.group_cache = None
+
+    group_cache = None
 
     def get_group_list(self):
-        wd = self.app.wd
-        groups = []
-        for element in wd.find_elements_by_css_selector("span.group"):
-            name = element.text
-            id = element.find_element_by_name("selected[]").get_attribute("value")
-            groups.append(Group(name=name, id=id))
-        return groups
+        if self.group_cache is None:
+            wd = self.app.wd
+            self.group_cache = []
+            for element in wd.find_elements_by_css_selector("span.group"):
+                name = element.text
+                id = element.find_element_by_name("selected[]").get_attribute("value")
+                self.group_cache.append(Group(name=name, id=id))
+        return list(self.group_cache)

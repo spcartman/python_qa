@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from random import randrange
 from model.group import Group
 
 
@@ -8,9 +9,10 @@ def test_del_group(app):
         app.group.create(Group(name="Safety Group"))
         app.navigation.open_groups_page()
     old_groups = app.group.get_group_list()
-    app.group.delete()
+    index = randrange(len(old_groups))
+    app.group.delete_by_index(index)
     app.navigation.open_groups_page()
+    assert (len(old_groups) - 1) == app.count_item()
     new_groups = app.group.get_group_list()
-    assert (len(old_groups) - 1) == len(new_groups)
-    old_groups[0:1] = []
+    old_groups[index:index + 1] = []
     assert old_groups == new_groups
