@@ -13,7 +13,7 @@ def test_add_contact(app):
                       address2="8, Home ave 24", hphone2="785 23 67", notes="The contact is created by the script.")
     app.contact.create(contact)
     app.navigation.go_home()
+    assert (len(old_contacts) + 1) == app.count_item()
     new_contacts = app.contact.get_contact_list()
-    assert (len(old_contacts) + 1) == len(new_contacts)
     old_contacts.append(contact)
     assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
