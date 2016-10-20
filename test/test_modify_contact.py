@@ -8,16 +8,19 @@ def test_modify_whole_contact(app):
         app.contact.create(Contact(fname="Safety Contact"))
         app.navigation.go_home()
     old_contacts = app.contact.get_contact_list()
-    app.contact.modify(Contact(fname="New First Name 003", mname="New Middle Name", lname="New Last Name 003",
-                               nick="New fooname", title="New Mr.", company="New MacroSoft", address1="6, New road 19",
-                               hphone="333 83 33", mphone="333 74 33", wphone="333 82 33", fax="333 63 33",
-                               email1="new_foo@mail.coom", email2="new_foo2@mail.coom", email3="new_foo3@mail.com",
-                               homepage="http://new_localhost/", bday="22", bmonth="June", byear="1933", aday="11",
-                               amonth="april", ayear="1955", group=7, address2="8, New Home ave 24",
-                               hphone2="333 23 33", notes="The contact is UPDATED by the script."))
+    contact = Contact(fname="New First Name 003", mname="New Middle Name", lname="New Last Name 003", nick="Ne fooname",
+                      title="New Mr.", company="New MacroSoft", address1="6, New road 19", hphone="333 83 33",
+                      mphone="333 74 33", wphone="333 82 33", fax="333 63 33", email1="new_foo@mail.coom",
+                      email2="new_foo2@mail.coom", email3="new_foo3@mail.com", homepage="http://new_host/", bday="22",
+                      bmonth="June", byear="1933", aday="11", amonth="april", ayear="1955", group=7,
+                      address2="8, New Home ave 24", hphone2="333 23 33", notes="The contact is UPDATED by the script.")
+    contact.id = old_contacts[0].id
+    app.contact.modify(contact)
     app.navigation.go_home()
     new_contacts = app.contact.get_contact_list()
     assert len(old_contacts) == len(new_contacts)
+    old_contacts[0] = contact
+    assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
 
 
 def test_modify_contact_name(app):
@@ -26,7 +29,11 @@ def test_modify_contact_name(app):
         app.contact.create(Contact(fname="Safety Contact"))
         app.navigation.go_home()
     old_contacts = app.contact.get_contact_list()
-    app.contact.modify(Contact(fname="Just name change"))
+    contact = Contact(fname="Just name change")
+    contact.id = old_contacts[0].id
+    app.contact.modify(contact)
     app.navigation.go_home()
     new_contacts = app.contact.get_contact_list()
     assert len(old_contacts) == len(new_contacts)
+    old_contacts[0] = contact
+    assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
