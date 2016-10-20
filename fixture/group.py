@@ -20,9 +20,9 @@ class GroupHelper:
         wd.find_element_by_name("submit").click()
         self.group_cache = None
 
-    def modify(self, group):
+    def modify_by_index(self, index, group):
         wd = self.app.wd
-        self.app.select_item_by_index()
+        self.app.select_item_by_index(index)
         # click button to edit
         wd.find_element_by_name("edit").click()
         self.fill_form(group)

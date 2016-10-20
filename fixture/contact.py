@@ -44,10 +44,10 @@ class ContactHelper:
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
         self.contact_cache = None
 
-    def modify(self, contact):
+    def modify_by_index(self, index, contact):
         wd = self.app.wd
         # click edit image-button
-        wd.find_element_by_xpath("//img[@title='Edit']").click()
+        wd.find_elements_by_xpath("//img[@title='Edit']")[index].click()
         self.fill_form(contact)
         # submit contact changes
         wd.find_element_by_name("update").click()
