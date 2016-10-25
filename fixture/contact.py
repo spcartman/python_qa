@@ -82,10 +82,10 @@ class ContactHelper:
                 last_name = element.find_element_by_css_selector("td:nth-child(2)").text
                 first_name = element.find_element_by_css_selector("td:nth-child(3)").text
                 address1 = element.find_element_by_css_selector("td:nth-child(4)").text
-                emails = element.find_element_by_css_selector("td:nth-child(5)").text.splitlines()
+                emails = element.find_element_by_css_selector("td:nth-child(5)").text
                 phones = element.find_element_by_css_selector("td:nth-child(6)").text
                 self.contact_cache.append(Contact(id=id, fname=first_name, lname=last_name, address1=address1,
-                                                  email1=emails[0], email2=emails[1], email3=emails[2], phones=phones))
+                                                  emails=emails, phones=phones))
         return list(self.contact_cache)
 
     def get_info_from_edit_page(self, index):
@@ -120,3 +120,6 @@ class ContactHelper:
                                 (re.sub("[() -]", "", x) for x in
                                  filter(lambda x: x is not None,
                                         [contact.hphone, contact.mphone, contact.wphone, contact.hphone2]))))
+
+    def merge_emails(self, contact):
+        pass
