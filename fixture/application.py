@@ -23,7 +23,6 @@ class Application:
             return False
 
     def select_item_by_index(self, index):
-        # TODO: implement proper selection, currently function deletes first item only
         self.wd.find_elements_by_name("selected[]")[index].click()
 
     def count_item(self):
@@ -41,7 +40,7 @@ class Application:
             item = Select(self.wd.find_element_by_name(field))
             if field == "new_group":
                 # item.select_by_index(value)
-                pass # TODO: check for the number of elements in dropdown
+                pass  # TODO: check for the number of elements in dropdown
             else:
                 item.select_by_value(value)
 

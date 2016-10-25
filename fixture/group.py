@@ -20,7 +20,7 @@ class GroupHelper:
         wd.find_element_by_name("submit").click()
         self.group_cache = None
 
-    def modify_by_index(self, index, group):
+    def modify(self, index, group):
         wd = self.app.wd
         self.app.select_item_by_index(index)
         # click button to edit
@@ -30,7 +30,7 @@ class GroupHelper:
         wd.find_element_by_name("update").click()
         self.group_cache = None
 
-    def delete_by_index(self, index):
+    def delete(self, index):
         wd = self.app.wd
         self.app.select_item_by_index(index)
         wd.find_element_by_name("delete").click()

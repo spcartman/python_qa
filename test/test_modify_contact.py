@@ -17,7 +17,7 @@ def test_modify_whole_contact(app):
                       bmonth="June", byear="1933", aday="11", amonth="april", ayear="1955", group=7,
                       address2="8, New Home ave 24", hphone2="333 23 33", notes="The contact is UPDATED by the script.")
     contact.id = old_contacts[index].id
-    app.contact.modify_by_index(index, contact)
+    app.contact.modify(index, contact)
     app.navigation.go_home()
     assert len(old_contacts) == app.count_item()
     new_contacts = app.contact.get_contact_list()
@@ -34,7 +34,7 @@ def test_modify_contact_name(app):
     index = randrange(len(old_contacts))
     contact = Contact(fname="Just name change")
     contact.id = old_contacts[index].id
-    app.contact.modify_by_index(index, contact)
+    app.contact.modify(index, contact)
     app.navigation.go_home()
     assert len(old_contacts) == app.count_item()
     new_contacts = app.contact.get_contact_list()
