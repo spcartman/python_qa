@@ -3,11 +3,12 @@ from sys import maxsize
 
 class Contact:
 
-    def __init__(self, fname=None, mname=None, lname=None, nick=None, title=None, company=None, address1=None,
+    def __init__(self, id=None, fname=None, mname=None, lname=None, nick=None, title=None, company=None, address1=None,
                  hphone=None, mphone=None, wphone=None, fax=None, email1=None, email2=None, email3=None, homepage=None,
                  bday=None, bmonth=None, byear=None, aday=None, amonth=None, ayear=None, group=None, address2=None,
-                 hphone2=None, notes=None, id=None):
+                 hphone2=None, notes=None, phones=None, emails=None):
         # TODO: add photo support
+        self.id = id
         self.fname = fname
         self.mname = mname
         self.lname = lname
@@ -33,10 +34,11 @@ class Contact:
         self.address2 = address2
         self.hphone2 = hphone2
         self.notes = notes
-        self.id = id
+        self.phones = phones
+        self.emails = emails
 
     def __repr__(self):
-        return '%s:%s:%s' % (self.id, self.fname, self.lname)
+        return '%s:%s %s' % (self.id, self.fname, self.lname)
 
     def __eq__(self, other):
         return (self.id is None or other.id is None or self.id == other.id) and \

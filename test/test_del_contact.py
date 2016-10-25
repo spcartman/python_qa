@@ -10,7 +10,7 @@ def test_del_contact(app):
         app.navigation.go_home()
     old_contacts = app.contact.get_contact_list()
     index = randrange(len(old_contacts))
-    app.contact.delete_by_index(index)
+    app.contact.delete(index)
     app.navigation.go_home()
     assert (len(old_contacts) - 1) == app.count_item()
     new_contacts = app.contact.get_contact_list()

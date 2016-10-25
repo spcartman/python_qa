@@ -12,7 +12,7 @@ def test_modify_whole_group(app):
     index = randrange(len(old_groups))
     group = Group(name='modified name', header='modified header', footer='modified footer')
     group.id = old_groups[index].id
-    app.group.modify_by_index(index, group)
+    app.group.modify(index, group)
     app.navigation.open_groups_page()
     assert len(old_groups) == app.count_item()
     new_groups = app.group.get_group_list()
@@ -29,7 +29,7 @@ def test_modify_group_name(app):
     index = randrange(len(old_groups))
     group = Group(name='just updated name')
     group.id = old_groups[index].id
-    app.group.modify_by_index(index, group)
+    app.group.modify(index, group)
     app.navigation.open_groups_page()
     assert len(old_groups) == app.count_item()
     new_groups = app.group.get_group_list()

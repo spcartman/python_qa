@@ -10,7 +10,7 @@ def test_del_group(app):
         app.navigation.open_groups_page()
     old_groups = app.group.get_group_list()
     index = randrange(len(old_groups))
-    app.group.delete_by_index(index)
+    app.group.delete(index)
     app.navigation.open_groups_page()
     assert (len(old_groups) - 1) == app.count_item()
     new_groups = app.group.get_group_list()
