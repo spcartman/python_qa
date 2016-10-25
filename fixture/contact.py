@@ -122,4 +122,6 @@ class ContactHelper:
                                         [contact.hphone, contact.mphone, contact.wphone, contact.hphone2]))))
 
     def merge_emails(self, contact):
-        pass
+        return "\n".join(filter(lambda x: x != "",
+                                filter(lambda x: x is not None,
+                                       [contact.email1, contact.email2, contact.email3])))
