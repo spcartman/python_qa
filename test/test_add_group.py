@@ -6,7 +6,7 @@ import string
 
 
 def rand_string(prefix, maxlen):
-    chars = string.ascii_letters + string.digits + " " * 10
+    chars = string.ascii_letters + string.digits + string.punctuation + " " * 10
     return prefix + "".join([random.choice(chars) for i in range(random.randrange(maxlen))])
 
 test_data = [Group(name=name, header=header, footer=footer)
