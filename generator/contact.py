@@ -2,7 +2,24 @@ import random
 import string
 import os.path
 import json
+import getopt
+import sys
 from model.contact import Contact
+
+try:
+    opts, args = getopt.getopt(sys.argv[1:], "n:f:", ["number of contacts", "file"])
+except getopt.GetoptError as error:
+    getopt.usage()
+    sys.exit(2)
+
+n = 3
+f = "data/contact.json"
+
+for o, a in opts:
+    if o == "-n":
+        n = int(a)
+    elif o == "-f":
+        f = a
 
 
 def rand_string(prefix, maxlen):
@@ -12,9 +29,9 @@ def rand_string(prefix, maxlen):
 test_data = [Contact()] + [Contact(fname=rand_string("fname", 10), lname=rand_string("lname", 10),
                                    address1=rand_string("address", 30), hphone=rand_string("homeph", 10),
                                    mphone=rand_string("mobileph", 10), email1=rand_string("email1", 15))
-                           for i in range(2)]
+                           for i in range(n)]
 
-data_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../data/contact.json")
+data_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", f)
 
-with open(data_file, "w") as f:
-    f.write(json.dumps(test_data, default=lambda x: x.__dict__, indent=2))
+with open(data_file, "w") as output:
+    output.write(json.dumps(test_data, default=lambda x: x.__dict__, indent=2))
