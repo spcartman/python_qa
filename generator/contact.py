@@ -1,7 +1,7 @@
 import random
 import string
 import os.path
-import json
+import jsonpickle
 import getopt
 import sys
 from model.contact import Contact
@@ -12,8 +12,8 @@ except getopt.GetoptError as error:
     getopt.usage()
     sys.exit(2)
 
-n = 3
-f = "data/contact.json"
+n = 1
+f = "data/contacts.json"
 
 for o, a in opts:
     if o == "-n":
@@ -34,4 +34,5 @@ test_data = [Contact()] + [Contact(fname=rand_string("fname", 10), lname=rand_st
 data_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", f)
 
 with open(data_file, "w") as output:
-    output.write(json.dumps(test_data, default=lambda x: x.__dict__, indent=2))
+    jsonpickle.set_encoder_options("json", indent=2)
+    output.write(jsonpickle.encode(test_data))

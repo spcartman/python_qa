@@ -1,7 +1,7 @@
 import random
 import string
 import os.path
-import json
+import jsonpickle
 from model.group import Group
 
 
@@ -14,7 +14,8 @@ test_data = [Group(name=name, header=header, footer=footer)
              for header in ("", rand_string("header", 20))
              for footer in ("", rand_string("footer", 20))]
 
-data_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../data/group.json")
+data_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../data/groups.json")
 
 with open(data_file, "w") as f:
-    f.write(json.dumps(test_data, default=lambda x: x.__dict__, indent=2))
+    jsonpickle.set_encoder_options("json", indent=2)
+    f.write(jsonpickle.encode(test_data))
