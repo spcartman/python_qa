@@ -130,4 +130,12 @@ class ContactHelper:
         contact.fname = ' '.join(contact.fname.split())
         contact.lname = ' '.join(contact.lname.split())
         contact.address1 = ' '.join(contact.address1.split())
+        contact.email1 = ' '.join(contact.email1.split())
+        contact.email2 = ' '.join(contact.email2.split())
+        contact.email3 = ' '.join(contact.email3.split())
+        return contact
+
+    def make_emails_and_phones(self, contact):
+        contact.emails = self.merge_emails(contact)
+        contact.phones = self.merge_phones(contact)
         return contact
