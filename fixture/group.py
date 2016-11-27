@@ -20,9 +20,9 @@ class GroupHelper:
         wd.find_element_by_name("submit").click()
         self.group_cache = None
 
-    def modify(self, index, group):
+    def modify(self, id, group):
         wd = self.app.wd
-        self.app.select_item_by_index(index)
+        self.app.select_item_by_id(id)
         # click button to edit
         wd.find_element_by_name("edit").click()
         self.fill_form(group)
@@ -30,9 +30,9 @@ class GroupHelper:
         wd.find_element_by_name("update").click()
         self.group_cache = None
 
-    def delete(self, index):
+    def delete(self, id):
         wd = self.app.wd
-        self.app.select_item_by_index(index)
+        self.app.select_item_by_id(id)
         wd.find_element_by_name("delete").click()
         self.group_cache = None
 
@@ -47,3 +47,7 @@ class GroupHelper:
                 id = element.find_element_by_name("selected[]").get_attribute("value")
                 self.group_cache.append(Group(name=name, id=id))
         return list(self.group_cache)
+
+    def strip_spaces(self, group):
+        group.name = ' '.join(group.name.split())
+        return group
