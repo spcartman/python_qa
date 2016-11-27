@@ -30,9 +30,9 @@ class GroupHelper:
         wd.find_element_by_name("update").click()
         self.group_cache = None
 
-    def delete(self, index):
+    def delete(self, id):
         wd = self.app.wd
-        self.app.select_item_by_index(index)
+        self.app.select_item_by_id(id)
         wd.find_element_by_name("delete").click()
         self.group_cache = None
 

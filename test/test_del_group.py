@@ -1,18 +1,16 @@
 # -*- coding: utf-8 -*-
-from random import randrange
+from random import choice
 from model.group import Group
 
 
-def test_del_group(app):
+def test_del_group(app, db):
     app.navigation.open_groups_page()
-    if app.count_item() == 0:
+    if len(db.get_group_list()) == 0:
         app.group.create(Group(name="Safety Group"))
         app.navigation.open_groups_page()
-    old_groups = app.group.get_group_list()
-    index = randrange(len(old_groups))
-    app.group.delete(index)
-    app.navigation.open_groups_page()
-    assert (len(old_groups) - 1) == app.count_item()
-    new_groups = app.group.get_group_list()
-    old_groups[index:index + 1] = []
+    old_groups = db.get_group_list()
+    group_to_delete = choice(old_groups)
+    app.group.delete(group_to_delete.id)
+    old_groups.remove(group_to_delete)
+    new_groups = db.get_group_list()
     assert old_groups == new_groups

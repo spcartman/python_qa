@@ -33,6 +33,9 @@ class Application:
     def select_item_by_index(self, index):
         self.wd.find_elements_by_name("selected[]")[index].click()
 
+    def select_item_by_id(self, id):
+        self.wd.find_element_by_xpath("//input[@value='%s']" % id).click()
+
     def count_item(self):
         return len(self.wd.find_elements_by_name("selected[]"))
 
