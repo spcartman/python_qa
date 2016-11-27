@@ -33,7 +33,7 @@ class DBFixture:
                            " FROM `addressbook` WHERE deprecated = '0000-00-00 00:00:00'")
             for row in cursor:
                 (id, lname, fname, address1, email1, email2, email3, hphone, mphone, wphone, hphone2) = row
-                contact_list.append(Contact(id=id, fname=fname, lname=lname, address1=address1))
+                contact_list.append(Contact(id=str(id), fname=fname, lname=lname, address1=address1))
         finally:
             cursor.close()
         return contact_list

@@ -3,7 +3,7 @@ from random import choice
 from model.group import Group
 
 
-def test_modify_group(app, db, json_groups):
+def test_modify_group(app, db, json_groups, check_ui):
     group = json_groups
     app.navigation.open_groups_page()
     if len(db.get_group_list()) == 0:
@@ -17,3 +17,7 @@ def test_modify_group(app, db, json_groups):
     old_groups.remove(group_to_modify)
     old_groups.append(group)
     assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
+    if check_ui:
+        app.navigation.open_groups_page()
+        assert sorted(map(app.group.strip_spaces, new_groups),
+                      key=Group.id_or_max) == sorted(app.group.get_group_list(), key=Group.id_or_max)

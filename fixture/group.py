@@ -47,3 +47,7 @@ class GroupHelper:
                 id = element.find_element_by_name("selected[]").get_attribute("value")
                 self.group_cache.append(Group(name=name, id=id))
         return list(self.group_cache)
+
+    def strip_spaces(self, group):
+        group.name = ' '.join(group.name.split())
+        return group

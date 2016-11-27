@@ -125,3 +125,9 @@ class ContactHelper:
         return "\n".join(filter(lambda x: x != "",
                                 filter(lambda x: x is not None,
                                        [contact.email1, contact.email2, contact.email3])))
+
+    def strip_spaces(self, contact):
+        contact.fname = ' '.join(contact.fname.split())
+        contact.lname = ' '.join(contact.lname.split())
+        contact.address1 = ' '.join(contact.address1.split())
+        return contact

@@ -34,12 +34,18 @@ def app(request):
 @pytest.fixture(scope="session")
 def db(request):
     db_config = load_conf_file(request.config.getoption("--target"))["db"]
-    dbfixture = DBFixture(host=db_config["host"], db_name=db_config["db_name"], user=db_config["user"],
-                          password=db_config["pass"])
+    dbfixture = DBFixture(host=db_config["host"], db_name=db_config["db_name"],
+                          user=db_config["user"], password=db_config["pass"])
     def fin():
         dbfixture.destroy()
     request.addfinalizer(fin)
     return dbfixture
+
+
+@pytest.fixture(scope="session")
+def check_ui(request):
+    return request.config.getoption("--check_ui")
+
 
 @pytest.fixture(scope="session", autouse=True)
 def stop(request):
@@ -52,6 +58,7 @@ def stop(request):
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="firefox")
     parser.addoption("--target", action="store", default="target.json")
+    parser.addoption("--check_ui", action="store_true")
 
 
 def pytest_generate_tests(metafunc):
