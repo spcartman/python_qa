@@ -53,18 +53,18 @@ class ContactHelper:
         wd = self.app.wd
         wd.find_elements_by_xpath("//img[@title='Edit']")[index].click()
 
-    def modify(self, index, contact):
+    def modify(self, id, contact):
         wd = self.app.wd
         # click edit image-button
-        self.edit_by_index(index)
+        wd.find_element_by_xpath("//a[@href='edit.php?id=%s']" % id).click()
         self.fill_form(contact)
         # submit contact changes
         wd.find_element_by_name("update").click()
         self.contact_cache = None
 
-    def delete(self, index):
+    def delete(self, id):
         wd = self.app.wd
-        self.app.select_item_by_index(index)
+        self.app.select_item_by_id(id)
         # click Delete button
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         # confirm deletion

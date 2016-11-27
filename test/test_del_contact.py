@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
-from random import randrange
+from random import choice
 from model.contact import Contact
+import time
 
 
-def test_del_contact(app):
+def test_del_contact(app, db):
     app.navigation.go_home()
-    if app.count_item() == 0:
+    if len(db.get_contact_list()) == 0:
         app.contact.create(Contact(fname="Safety Contact"))
         app.navigation.go_home()
-    old_contacts = app.contact.get_contact_list()
-    index = randrange(len(old_contacts))
-    app.contact.delete(index)
-    app.navigation.go_home()
-    assert (len(old_contacts) - 1) == app.count_item()
-    new_contacts = app.contact.get_contact_list()
-    old_contacts[index:index + 1] = []
+    old_contacts = db.get_contact_list()
+    contact_to_delete = choice(old_contacts)
+    app.contact.delete(contact_to_delete.id)
+    old_contacts.remove(contact_to_delete)
+    time.sleep(1)
+    new_contacts = db.get_contact_list()
     assert old_contacts == new_contacts

@@ -30,9 +30,6 @@ class Application:
         except:
             return False
 
-    def select_item_by_index(self, index):
-        self.wd.find_elements_by_name("selected[]")[index].click()
-
     def select_item_by_id(self, id):
         self.wd.find_element_by_xpath("//input[@value='%s']" % id).click()
 
