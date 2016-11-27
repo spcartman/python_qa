@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 from random import randrange
+from model.contact import Contact
 
 
-def test_info_on_home_page(app):
+def test_random_contact_info_on_home_page(app):
     app.navigation.go_home()
     index = randrange(len(app.contact.get_contact_list()))
     contact_home_page = app.contact.get_contact_list()[index]
@@ -12,6 +13,14 @@ def test_info_on_home_page(app):
     assert contact_home_page.address1 == contact_edit_page.address1
     assert contact_home_page.emails == app.contact.merge_emails(contact_edit_page)
     assert contact_home_page.phones == app.contact.merge_phones(contact_edit_page)
+
+
+def test_home_page_info(app, db):
+    app.navigation.go_home()
+    assert sorted(map(app.contact.make_emails_and_phones,
+                      map(app.contact.strip_spaces,
+                          db.get_contact_list())),
+                  key=Contact.id_or_max) == sorted(app.contact.get_contact_list(), key=Contact.id_or_max)
 
 
 # def test_info_on_details_page(app):

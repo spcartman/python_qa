@@ -38,12 +38,15 @@ class Contact:
         self.emails = emails
 
     def __repr__(self):
-        return '%s:%s:%s' % (self.id, self.fname, self.lname)
+        return '%s:%s:%s:%s:%s:%s' % (self.id, self.fname, self.lname, self.address1, self.emails, self.phones)
 
     def __eq__(self, other):
         return (self.id is None or other.id is None or self.id == other.id) and \
                (self.fname is None or other.fname is None or self.fname == other.fname) and \
-               (self.lname is None or other.lname is None or self.lname == other.lname)
+               (self.lname is None or other.lname is None or self.lname == other.lname) and \
+               (self.address1 is None or other.address1 is None or self.address1 == other.address1) and \
+               (self.emails is None or other.emails is None or self.emails == other.emails) and \
+               (self.phones is None or other.phones is None or self.phones == other.phones)
 
     def id_or_max(self):
         if self.id:
