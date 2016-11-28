@@ -34,6 +34,7 @@ class GroupHelper:
         wd = self.app.wd
         self.app.select_item_by_id(id)
         wd.find_element_by_name("delete").click()
+        self.app.ensure_del_confirm_page("Group has been removed.")
         self.group_cache = None
 
     group_cache = None

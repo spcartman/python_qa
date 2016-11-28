@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from random import choice
 from model.contact import Contact
-from time import sleep
 
 
 def test_del_contact(app, db, check_ui):
@@ -13,7 +12,6 @@ def test_del_contact(app, db, check_ui):
     contact_to_delete = choice(old_contacts)
     app.contact.delete(contact_to_delete.id)
     old_contacts.remove(contact_to_delete)
-    sleep(1)
     new_contacts = db.get_contact_list()
     assert old_contacts == new_contacts
     if check_ui:

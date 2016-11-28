@@ -69,6 +69,7 @@ class ContactHelper:
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         # confirm deletion
         wd.switch_to_alert().accept()
+        self.app.ensure_del_confirm_page("Record successful deleted")
         self.contact_cache = None
 
     contact_cache = None

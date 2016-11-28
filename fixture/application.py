@@ -1,5 +1,9 @@
 from selenium import webdriver
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.by import By
+from selenium.common.exceptions import TimeoutException
 from fixture.contact import ContactHelper
 from fixture.group import GroupHelper
 from fixture.navigation import NavigationHelper
@@ -51,6 +55,12 @@ class Application:
                 pass  # TODO: check for the number of elements in dropdown
             else:
                 item.select_by_value(value)
+
+    def ensure_del_confirm_page(self, text):
+        try:
+            WebDriverWait(self.wd, 5).until(EC.text_to_be_present_in_element((By.CSS_SELECTOR, ".msgbox"), text))
+        except TimeoutException as ex:
+            print("\nDeletion confirmation page was not loaded in due time. Exception is raised:\n" + str(ex))
 
     def destroy(self):
         self.wd.quit()
