@@ -49,6 +49,10 @@ class ContactHelper:
         wd = self.app.wd
         wd.find_elements_by_xpath("//img[@title='Details']")[index].click()
 
+    def open_details(self, contact_id):
+        wd = self.app.wd
+        wd.find_element_by_xpath("//a[@href='view.php?id=%s']" % contact_id).click()
+
     def edit_by_index(self, index):
         wd = self.app.wd
         wd.find_elements_by_xpath("//img[@title='Edit']")[index].click()
@@ -64,12 +68,12 @@ class ContactHelper:
 
     def delete(self, id):
         wd = self.app.wd
-        self.app.select_item_by_id(id)
+        self.app.select_grid_item_by_id(id)
         # click Delete button
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         # confirm deletion
         wd.switch_to_alert().accept()
-        self.app.ensure_del_confirm_page("Record successful deleted")
+        self.app.ensure_confirm_page("Record successful deleted")
         self.contact_cache = None
 
     contact_cache = None
@@ -116,6 +120,19 @@ class ContactHelper:
         secondphone = re.search("P: (.*)", text).group(1)
         return Contact(hphone=homephone, mphone=mobilephone, wphone=workphone, hphone2=secondphone)
 
+    def link_to_group(self, contact, group):
+        wd = self.app.wd
+        self.app.select_grid_item_by_id(contact.id)
+        self.app.update_dropdown_field("to_group", group.id)
+        wd.find_element_by_name("add").click()
+        self.app.ensure_confirm_page("Users added.")
+
+    def details_has_group(self, contact, group):
+        wd = self.app.wd
+        self.app.navigation.go_home()
+        self.open_details(contact.id)
+        return wd.find_element_by_xpath("//a[@href='./index.php?group=%s']" % group.id).text == group.name
+
     def merge_phones(self, contact):
         return "\n".join(filter(lambda x: x != "",
                                 (re.sub("[() -]", "", x) for x in
@@ -140,3 +157,9 @@ class ContactHelper:
         contact.emails = self.merge_emails(contact)
         contact.phones = self.merge_phones(contact)
         return contact
+
+    def ensure_existence_sanity_check(self, db):
+        self.app.navigation.go_home()
+        if len(db.get_contact_list()) == 0:
+            self.app.contact.create(Contact(fname="Safety Contact"))
+            self.app.navigation.go_home()

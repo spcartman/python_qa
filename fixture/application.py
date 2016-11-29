@@ -34,7 +34,7 @@ class Application:
         except:
             return False
 
-    def select_item_by_id(self, id):
+    def select_grid_item_by_id(self, id):
         self.wd.find_element_by_xpath("//input[@value='%s']" % id).click()
 
     def count_item(self):
@@ -47,20 +47,18 @@ class Application:
             self.wd.find_element_by_name(field).send_keys(value)
 
     def update_dropdown_field(self, field, value):
-        # TODO: merge update_text and update_dropdown methods
         if value is not None:
             item = Select(self.wd.find_element_by_name(field))
-            if field == "new_group":
-                # item.select_by_index(value)
-                pass  # TODO: check for the number of elements in dropdown
+            if field in ("amonth", "bmonth"):
+                item.select_by_visible_text(value)
             else:
                 item.select_by_value(value)
 
-    def ensure_del_confirm_page(self, text):
+    def ensure_confirm_page(self, text):
         try:
             WebDriverWait(self.wd, 5).until(EC.text_to_be_present_in_element((By.CSS_SELECTOR, ".msgbox"), text))
-        except TimeoutException as ex:
-            print("\nDeletion confirmation page was not loaded in due time. Exception is raised:\n" + str(ex))
+        except TimeoutException:
+            raise TimeoutException("\nConfirmation page was not loaded in due time.\n")
 
     def destroy(self):
         self.wd.quit()

@@ -5,10 +5,7 @@ from model.group import Group
 
 def test_modify_group(app, db, json_groups, check_ui):
     group = json_groups
-    app.navigation.open_groups_page()
-    if len(db.get_group_list()) == 0:
-        app.group.create(Group(name="Safety Group"))
-        app.navigation.open_groups_page()
+    app.group.ensure_existence_sanity_check(db)
     old_groups = db.get_group_list()
     group_to_modify = choice(old_groups)
     group.id = group_to_modify.id

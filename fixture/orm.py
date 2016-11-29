@@ -33,7 +33,7 @@ class ORMFixture:
         conv[datetime] = convert_mysql_timestamp
         self.db.bind("mysql", host=host, database=db_name, user=user, password=password, conv=conv)
         self.db.generate_mapping()
-        sql_debug(True)
+        # sql_debug(True)
 
     def covert_groups_to_model(self, groups):
         def convert(group):

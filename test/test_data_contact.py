@@ -3,8 +3,8 @@ from random import randrange
 from model.contact import Contact
 
 
-def test_random_contact_info_on_home_page(app):
-    app.navigation.go_home()
+def test_random_contact_info_on_home_page(app, db):
+    app.contact.ensure_existence_sanity_check(db)
     index = randrange(len(app.contact.get_contact_list()))
     contact_home_page = app.contact.get_contact_list()[index]
     contact_edit_page = app.contact.get_info_from_edit_page(index)

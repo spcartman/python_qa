@@ -5,10 +5,7 @@ from model.contact import Contact
 
 def test_modify_contact(app, db, data_contacts, check_ui):
     contact = data_contacts
-    app.navigation.go_home()
-    if len(db.get_contact_list()) == 0:
-        app.contact.create(Contact(fname="Safety Contact"))
-        app.navigation.go_home()
+    app.contact.ensure_existence_sanity_check(db)
     old_contacts = db.get_contact_list()
     contact_to_modify = choice(old_contacts)
     contact.id = contact_to_modify.id

@@ -22,7 +22,7 @@ class GroupHelper:
 
     def modify(self, id, group):
         wd = self.app.wd
-        self.app.select_item_by_id(id)
+        self.app.select_grid_item_by_id(id)
         # click button to edit
         wd.find_element_by_name("edit").click()
         self.fill_form(group)
@@ -32,9 +32,9 @@ class GroupHelper:
 
     def delete(self, id):
         wd = self.app.wd
-        self.app.select_item_by_id(id)
+        self.app.select_grid_item_by_id(id)
         wd.find_element_by_name("delete").click()
-        self.app.ensure_del_confirm_page("Group has been removed.")
+        self.app.ensure_confirm_page("Group has been removed.")
         self.group_cache = None
 
     group_cache = None
@@ -52,3 +52,9 @@ class GroupHelper:
     def strip_spaces(self, group):
         group.name = ' '.join(group.name.split())
         return group
+
+    def ensure_existence_sanity_check(self, db):
+        self.app.navigation.open_groups_page()
+        if len(db.get_group_list()) == 0:
+            self.app.group.create(Group(name="Safety Group"))
+            self.app.navigation.open_groups_page()
