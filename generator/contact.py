@@ -39,8 +39,8 @@ def generate_contact_data(n):
 # Contact(fname=fname, mname=mname, lname=lname, nick=nick, title=title, company=company,
 #                         address1=address1, hphone=hphone, mphone=mphone, wphone=wphone, fax=fax, email1=email1,
 #                         email2=email2, email3=email3, homepage=homepage, bday=bday, bmonth=random.choice(months),
-#                         byear=byear, aday=aday, amonth=None, ayear=ayear, group=None, address2=address2,
-#                         hphone2=hphone2, notes=notes)
+#                         byear=byear, aday=aday, amonth=random.choice(months), ayear=ayear, group=None,
+#                         address2=address2, hphone2=hphone2, notes=notes)
 #                 for fname in ("", rand_string("fname", 10))
 #                 for mname in ("", rand_string("mname", 10))
 #                 for lname in ("", rand_string("lname", 10))

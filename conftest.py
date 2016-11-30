@@ -5,6 +5,7 @@ import os.path
 import importlib
 from fixture.application import Application
 from fixture.db import DBFixture
+from fixture.orm import ORMFixture
 
 
 fixture = None
@@ -40,6 +41,14 @@ def db(request):
         dbfixture.destroy()
     request.addfinalizer(fin)
     return dbfixture
+
+
+@pytest.fixture(scope="session")
+def orm(request):
+    db_config = load_conf_file(request.config.getoption("--target"))["db"]
+    ormfixture = ORMFixture(host=db_config["host"], db_name=db_config["db_name"],
+                            user=db_config["user"], password=db_config["pass"])
+    return ormfixture
 
 
 @pytest.fixture(scope="session")
