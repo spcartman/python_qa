@@ -127,6 +127,13 @@ class ContactHelper:
         wd.find_element_by_name("add").click()
         self.app.ensure_confirm_page("Users added.")
 
+    def unlink_from_group(self, contact, group):
+        wd = self.app.wd
+        self.app.update_dropdown_field("group", group.id)
+        self.app.select_grid_item_by_id(contact.id)
+        wd.find_element_by_name("remove").click()
+        self.app.ensure_confirm_page("Users removed.")
+
     def details_has_group(self, contact, group):
         wd = self.app.wd
         self.app.navigation.go_home()
@@ -159,7 +166,5 @@ class ContactHelper:
         return contact
 
     def ensure_existence_sanity_check(self, db):
-        self.app.navigation.go_home()
         if len(db.get_contact_list()) == 0:
-            self.app.contact.create(Contact(fname="Safety Contact"))
-            self.app.navigation.go_home()
+            db.insert_sanity_contact()

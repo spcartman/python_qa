@@ -5,6 +5,7 @@ from model.contact import Contact
 
 def test_del_contact(app, db, check_ui):
     app.contact.ensure_existence_sanity_check(db)
+    app.navigation.go_home()
     old_contacts = db.get_contact_list()
     contact_to_delete = choice(old_contacts)
     app.contact.delete(contact_to_delete.id)

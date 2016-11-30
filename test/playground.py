@@ -1,10 +1,9 @@
 # import mysql.connector
 # import pymysql
 # from model.contact import Contact
-
-
-# conn = pymysql.connect(host="127.0.0.1", database="addressbook", user="root", password="")
-
+#
+# conn = mysql.connector.connect(host="127.0.0.1", database="addressbook", user="root", password="")
+#
 # try:
 #     cursor = conn.cursor()
 #     cursor.execute("SELECT * FROM group_list")
@@ -12,24 +11,37 @@
 #         print(row)
 # finally:
 #     conn.close()
+# ------------------------------------------------------------------------------
 
-from fixture.orm import ORMFixture
-from model.group import Group
+from fixture.db import DBFixture
 
-
-db = ORMFixture(host="127.0.0.1", db_name="addressbook", user="root", password="")
+conn = DBFixture(host="127.0.0.1", db_name="addressbook", user="root", password="")
 
 try:
-    l = db.get_contacts_in_group(Group(id="263"))
-    for i in l:
-        print(i)
-    print("\n", len(l), "\n", type(l))
+    a, b = conn.get_random_linked_pair()
+    print(a, '\n', b)
 finally:
-    pass
+    conn.destroy()
+# ------------------------------------------------------------------------------
+
+# from fixture.orm import ORMFixture
+# from model.group import Group
+#
+# db = ORMFixture(host="127.0.0.1", db_name="addressbook", user="root", password="")
+#
+# try:
+#     l = db.get_contacts_in_group(Group(id="263"))
+#     for i in l:
+#         print(i)
+#     print("\n", len(l), "\n", type(l))
+# finally:
+#     pass
+# ------------------------------------------------------------------------------
 
 # input_s = '    h    a h  k   k        j  l  '
 # output_s = ''
 # count = 0
+#
 # for i in range(len(input_s)):
 #     if input_s[i] == ' ':
 #         count += 1
@@ -41,3 +53,4 @@ finally:
 # print('in: ' + input_s + '.')
 # print('out: ' + output_s + '.')
 # print('better: ' + ' '.join(input_s.split()) + '.')
+# ------------------------------------------------------------------------------

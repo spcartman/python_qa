@@ -54,7 +54,5 @@ class GroupHelper:
         return group
 
     def ensure_existence_sanity_check(self, db):
-        self.app.navigation.open_groups_page()
         if len(db.get_group_list()) == 0:
-            self.app.group.create(Group(name="Safety Group"))
-            self.app.navigation.open_groups_page()
+            db.insert_sanity_group()
