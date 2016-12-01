@@ -13,29 +13,29 @@
 #     conn.close()
 # ------------------------------------------------------------------------------
 
-from fixture.db import DBFixture
-
-conn = DBFixture(host="127.0.0.1", db_name="addressbook", user="root", password="")
-
-try:
-    a, b = conn.get_random_linked_pair()
-    print(a, '\n', b)
-finally:
-    conn.destroy()
-# ------------------------------------------------------------------------------
-
-# from fixture.orm import ORMFixture
-# from model.group import Group
+# from fixture.db import DBFixture
 #
-# db = ORMFixture(host="127.0.0.1", db_name="addressbook", user="root", password="")
+# conn = DBFixture(host="127.0.0.1", db_name="addressbook", user="root", password="")
 #
 # try:
-#     l = db.get_contacts_in_group(Group(id="263"))
-#     for i in l:
-#         print(i)
-#     print("\n", len(l), "\n", type(l))
+#     a, b = conn.get_random_linked_pair()
+#     print(a, '\n', b)
 # finally:
-#     pass
+#     conn.destroy()
+# ------------------------------------------------------------------------------
+
+from fixture.orm import ORMFixture
+from model.group import Group
+
+db = ORMFixture(host="127.0.0.1", db_name="addressbook", user="root", password="")
+
+try:
+    l = db.get_contacts_in_group(Group(id="302"))
+    for i in l:
+        print("\n", i)
+    print("\n", len(l))
+finally:
+    pass
 # ------------------------------------------------------------------------------
 
 # input_s = '    h    a h  k   k        j  l  '

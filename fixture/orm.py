@@ -59,7 +59,8 @@ class ORMFixture:
 
     @db_session
     def get_contacts_in_group(self, group):
-        return self.covert_contacts_to_model(self.get_group_by_id(group).contacts)
+        return self.covert_contacts_to_model(select(c for c in ORMFixture.ORMContact if c.deprecated is None
+                                                    and c in self.get_group_by_id(group).contacts))
 
     @db_session
     def get_contacts_not_in_group(self, group):
